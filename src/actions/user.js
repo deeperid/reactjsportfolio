@@ -1,3 +1,3 @@
 import { REGISTER, LOGIN } from '../constants';
 
-export const loginUser
+// export const loginUser

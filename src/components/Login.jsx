@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { FormGroup,
           ControlLabel,
           FormControl,
           HelpBlock,
-          Button,
           Modal
         } from 'react-bootstrap';
+
+import Button from './Button';
 
 function FieldGroup({ id, label, help, ...props }) {
   return (
@@ -31,10 +33,9 @@ class Login extends Component {
     return (
       <Modal show={true} onHide={this.handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h1>Login</h1>
           <form>
             <FieldGroup
               id="formControlsEmail"
@@ -47,8 +48,11 @@ class Login extends Component {
               label="Password"
               type="password"
             />
-            <Button type="submit">Login</Button>
+            <Button type="submit" text="Login" />
           </form>
+          <div>
+            Or <Link to="/register">Register</Link>
+          </div>
         </Modal.Body>
       </Modal>
     )

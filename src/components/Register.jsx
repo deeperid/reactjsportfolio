@@ -3,9 +3,10 @@ import { FormGroup,
           ControlLabel,
           FormControl,
           HelpBlock,
-          Button,
           Modal
         } from 'react-bootstrap';
+
+import Button from './Button';
 
 function FieldGroup({ id, label, help, ...props }) {
   return (
@@ -25,16 +26,16 @@ class Register extends Component {
 
   handleClose() {
     this.props.history.goBack();
+    this.props.history.goBack();
   }
 
   render() {
     return (
       <Modal show={true} onHide={this.handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>Register</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <h1>Register</h1>
           <form>
             <FieldGroup
               id="formControlsEmail"
@@ -47,7 +48,7 @@ class Register extends Component {
               label="Password"
               type="password"
             />
-            <Button type="submit">Register</Button>
+            <Button type="submit" text="Register" />
           </form>
         </Modal.Body>
       </Modal>
