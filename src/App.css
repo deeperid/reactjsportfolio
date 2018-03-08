@@ -40,3 +40,7 @@
 
 .Content {
   padding-bottom: 5em; }
+
+.Loader {
+  width: 5px;
+  margin: 3em auto; }

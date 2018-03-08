@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { Col, Jumbotron } from 'react-bootstrap';
+
+import Loader from './Loader';
 import Project from './Project';
 
 class Projects extends Component {
@@ -7,7 +9,8 @@ class Projects extends Component {
     super(props);
 
     this.state = {
-      projects: null
+      projects: null,
+      loading: true
     }
   }
 
@@ -19,6 +22,7 @@ class Projects extends Component {
     })
     .then(response => response.json())
     .then(json => {
+      const loading = false;
       let projects = json
                         .posts
                         .filter(post => post.featured_image);
@@ -29,7 +33,7 @@ class Projects extends Component {
                             .replace('</p>',' &hellip;</p>');
       });
 
-      this.setState({projects});
+      this.setState({projects,loading});
       console.log('this.state',this.state);
     });
   }
@@ -48,11 +52,12 @@ class Projects extends Component {
             <p>
             </p>
           </Jumbotron>
+          <Loader loading={this.state.loading} />
           {this.state.projects && this.state.projects.map((project,i) => {
-            return (
-              <Project key={i} post={project} />
-            )
-          })}
+                return (
+                  <Project key={i} post={project} />
+                )
+              })}
         </Col>
     )
   }
