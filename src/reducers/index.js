@@ -1,5 +1,8 @@
-import { REGISTER, LOGIN } from '../constsnts';
+import { combineReducers } from 'redux';
+import user from './user';
+import cart from './cart';
 
-const users = (state = [], action) => {
-  //let 
-}
+export default combineReducers({
+  user,
+  cart
+})

@@ -4,8 +4,13 @@ import '../App.css';
 
 class Button extends Component {
   render() {
+    let p = Object.assign({},this.props);
+    p.className = "inverse " + (p.className || '');
+
     return (
-      <BSButton className="inverse" type={this.props.type}>{this.props.text}</BSButton>
+      <BSButton {...p}>
+         {this.props.text}
+       </BSButton>
     )
   }
 }

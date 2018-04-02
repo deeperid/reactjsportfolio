@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { Grid, Row, Glyphicon } from 'react-bootstrap';
 
@@ -10,15 +11,37 @@ import { Home,
           Projects,
           Shop
        } from '.';
+import { firebaseApp } from '../firebase';
 
 class App extends Component {
-  // constructor(props) {
-  //   super(props);
-  //
-  //   // this.state = {
-  //   //
-  //   // }
-  // }
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email:null
+    }
+  }
+
+  logIn = (e) => {
+    const { email, password } = this.state;
+    e.preventDefault();
+    this.setState({error:{message:''}});
+
+    firebaseApp.auth().signInWithEmailAndPassword(email, password)
+      .then(user => {
+        this.props.history.goBack();
+      })
+      .catch(error => {
+        this.setState({error});
+      })
+  }
+
+  signOut = () => {
+    firebaseApp
+      .auth()
+      .signOut()
+      .then(() => this.setState({email:null}));
+  }
 
   render() {
     return (
@@ -40,7 +63,12 @@ class App extends Component {
                   <Link to="/shop"><Glyphicon glyph="shopping-cart" /></Link>
                 </li>
                 <li>
-                  <Link to="/login"><Glyphicon glyph="log-in" /></Link>
+                  {!this.state.email
+                    && <Link to="/login"><Glyphicon glyph="log-in" /></Link>
+                  }
+                  {this.state.email
+                    && <Link to="/" onClick={this.signOut}><Glyphicon glyph="log-out" /></Link>
+                  }
                 </li>
                 <li>
                   <Link to="/"><Glyphicon glyph="option-horizontal" /></Link>
@@ -55,7 +83,7 @@ class App extends Component {
                 <Route path="/projects" component={Projects} />
                 <Route path="/skills" component={Skills} />
                 <Route path="/shop" component={Shop} />
-                <Route path="/login" component={Login} />
+                <Route path="/login" component={Login} submit={this.logIn} />
                 <Route path="/register" component={Register} />
               </Row>
             </Grid>
@@ -66,4 +94,14 @@ class App extends Component {
   }
 }
 
-export default App;
+function mapStateToProps(state) {
+  console.log('state in app.jsx',state);
+  const { email } = state.user;
+  return {
+    user: {
+      email: email
+    }
+  }
+}
+
+export default connect(mapStateToProps, null)(App);

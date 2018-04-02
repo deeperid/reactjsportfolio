@@ -1,3 +1,9 @@
-import { REGISTER, LOGIN } from '../constants';
+import { LOGGED_IN } from '../constants';
 
-// export const loginUser
+export function logUser(email) {
+  const action = {
+    type: LOGGED_IN,
+    email
+  }
+  return action;
+}

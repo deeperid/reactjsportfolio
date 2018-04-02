@@ -7,6 +7,7 @@ import { FormGroup,
         } from 'react-bootstrap';
 
 import Button from './Button';
+import { firebaseApp } from '../firebase';
 
 function FieldGroup({ id, label, help, ...props }) {
   return (
@@ -22,11 +23,29 @@ class Register extends Component {
   constructor(props){
      super(props);
      this.handleClose = this.handleClose.bind(this);
+
+     this.state = {
+       email: '',
+       password: '',
+       error: {
+         message: ''
+       }
+     }
   }
 
-  handleClose() {
+  handleClose = () => {
     this.props.history.goBack();
     this.props.history.goBack();
+  }
+
+  register = () => {
+    const { email, password } = this.state;
+    this.setState({error:{message:''}});
+
+    firebaseApp.auth().createUserWithEmailAndPassword(email, password)
+      .catch(error => {
+        this.setState({error});
+      });
   }
 
   render() {
@@ -36,20 +55,20 @@ class Register extends Component {
           <Modal.Title>Register</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
-            <FieldGroup
-              id="formControlsEmail"
-              type="email"
-              label="Email address"
-              placeholder="Enter email"
-            />
-            <FieldGroup
-              id="formControlsPassword"
-              label="Password"
-              type="password"
-            />
-            <Button type="submit" text="Register" />
-          </form>
+          <FieldGroup
+            id="formControlsEmail"
+            type="email"
+            label="Email address"
+            placeholder="Enter email"
+          />
+          <FieldGroup
+            id="formControlsPassword"
+            label="Password"
+            type="password"
+            onClick={this.register}
+          />
+          <Button type="submit" text="Register" />
+          <div>{this.state.error.message}</div>
         </Modal.Body>
       </Modal>
     )

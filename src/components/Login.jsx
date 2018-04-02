@@ -22,12 +22,22 @@ function FieldGroup({ id, label, help, ...props }) {
 class Login extends Component {
   constructor(props){
      super(props);
+
      this.handleClose = this.handleClose.bind(this);
+
+     this.state = {
+       email: '',
+       password: '',
+       error: {
+         message: ''
+       }
+     }
   }
 
-  handleClose() {
+  handleClose = () => {
     this.props.history.goBack();
   }
+
 
   render() {
     return (
@@ -36,20 +46,27 @@ class Login extends Component {
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
+          <form onSubmit={this.props.submit}>
             <FieldGroup
+              onChange={event => this.setState({email:event.target.value})}
               id="formControlsEmail"
               type="email"
               label="Email address"
               placeholder="Enter email"
             />
             <FieldGroup
+              onChange={event => this.setState({password:event.target.value})}
               id="formControlsPassword"
               label="Password"
               type="password"
             />
-            <Button type="submit" text="Login" />
+            <Button
+              type="submit"
+              text="Login"
+              className="btn-danger"
+            />
           </form>
+          <div>{this.state.error.message}</div>
           <div>
             Or <Link to="/register">Register</Link>
           </div>
