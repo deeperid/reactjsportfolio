@@ -1,10 +1,21 @@
-body {
+html {
+  height: 100%;
+  background: linear-gradient(#52b9bb, black);
+  background-attachment: fixed;
+}
 
+body {
+  color: black;
+  background-color: rgba(0,0,0,0);
+}
+
+.jumbotron p {
+  font-weight: 400;
 }
 
 .inverse {
   filter: invert(100%);
-  .panel {
+  .panel,.Loader {
     filter: invert(100%);
   }
 }
@@ -55,6 +66,14 @@ body {
 }
 
 .Loader {
-  width: 5px;
+  width: 10px;
   margin: 3em auto;
+}
+
+.panel {
+  background-color: rgba(255,255,255,0.5);
+}
+
+.panel-heading {
+  opacity: 0.9;
 }

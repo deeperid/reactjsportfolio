@@ -7,7 +7,7 @@ class Button extends Component {
     return (
       <div className="Loader">
         <PropagateLoader
-          color={'#123abc'}
+          color={'#52b9bb'}
           loading={this.props.loading}
         />
       </div>
